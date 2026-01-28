@@ -390,7 +390,7 @@ void Main_Menu::BeginMenu()
 	default:
 		break;
 	}
-
+	//hello
 	} while (!bValidSelection);
 }
 void Main_Menu::DisplayCharacter(Character* _char)
