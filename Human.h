@@ -24,6 +24,7 @@ public:
 	{
 		std::cout << "Human Choose\n";
 	}
+
 	void SetClass(const CharacterClass _class);
 	void SetWeapon(const CharacterClass _class);
 
@@ -33,5 +34,6 @@ public:
 	Weapon* GetWeapon() const { return mWeapon; }
 	std::string GetFirstName() const { return mFirstName; }
 	std::string GetLastName() const { return mLastName; }
+	unsigned int GetHealth() const { return mHealth; }
 };
 

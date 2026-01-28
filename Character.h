@@ -50,6 +50,7 @@ public:
 	virtual ~Character() = default;
 
 	virtual void Display() const = 0;
+	virtual void DisplayStats();
 	virtual void SetClass(const CharacterClass _class) = 0;
 	virtual void SetWeapon(const CharacterClass _class) = 0;
 	virtual CharacterClass GetClass() const = 0;
@@ -58,4 +59,5 @@ public:
 	virtual Race GetRace() const = 0;
 	virtual std::string GetFirstName() const = 0;
 	virtual std::string GetLastName() const = 0;
+	virtual unsigned int GetHealth() const = 0;
 };

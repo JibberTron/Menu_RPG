@@ -46,7 +46,6 @@ public:
 	void ClassMenu();
 	void GenderMenu();
 	void BeginMenu();
-	void DisplayCharacter(Character* _char);
 
 	void PlayGame();
 	GameMode* SetGameMode();

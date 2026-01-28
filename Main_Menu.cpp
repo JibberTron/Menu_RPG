@@ -364,7 +364,7 @@ void Main_Menu::BeginMenu()
 			int p2 = dis(gen);
 
 			std::cout << mUserCharacter->GetFirstName() << " rolls " << p1 << '\n';
-			std::cout << mSecondCharacter->GetFirstName() << " 2 rolls " << p2 << '\n';
+			std::cout << mSecondCharacter->GetFirstName() << "  rolls " << p2 << '\n';
 
 			if (p1 > p2)
 			{
@@ -393,70 +393,17 @@ void Main_Menu::BeginMenu()
 	
 	} while (!bValidSelection);
 }
-void Main_Menu::DisplayCharacter(Character* _char)
-{
-	std::string className;
-	std::string gender;
-	std::string race;
-
-	switch (_char->GetClass())
-	{
-	case CharacterClass::WARRIOR:
-		className = "Warrior";
-		break;
-
-	case CharacterClass::ARCHER:
-		className = "Archer";
-		break;
-
-	case CharacterClass::MAGE:
-		className = "Mage";
-		break;
-
-	case CharacterClass::PRIEST:
-		className = "Priest";
-		break;
-
-	case CharacterClass::DEATH_KNIGHT:
-		className = "Death Knight";
-		break;
-
-	default:
-		break;
-	}
-
-	switch (_char->GetRace())
-	{
-	case Race::HUMAN:
-		race = "Human";
-		break;
-
-	case Race::UNDEAD:
-		race = "Undead";
-		break;
-
-	default:
-		break;
-	}
-	
-	if (_char->GetGender() == Gender::MALE)
-	{
-		gender = "Male";
-	}
-	else if (_char->GetGender() == Gender::FEMALE)
-	{
-		gender = "Female";
-	}
-
-	std::cout << "Name: " << _char->GetFirstName() << " " << _char->GetLastName() << "\nGender: " << gender << "\nClass: " << className << "\nRace: " << race << '\n';
-}
 
 void Main_Menu::PlayGame()
 {
 	mGameMode = SetGameMode();
+	if (!mUserCharacter || !mSecondCharacter || !mGameMode) return;
+
 	int userChoice;
 	bool bValidSelection = false;
 	do {
+		mUserCharacter->DisplayStats();
+		mSecondCharacter->DisplayStats();
 		std::cout << "Please select a action\n1: Attack\n2: Exit\nSelection: ";
 		std::cin >> userChoice;
 		switch (userChoice)
@@ -464,22 +411,21 @@ void Main_Menu::PlayGame()
 		case 1:
 			if (bPlayer1First || bPlayer1Turn)
 			{
-				DisplayCharacter(mUserCharacter);
-				mGameMode->Attack(mUserCharacter);
 				bPlayer1First = false;
+				mGameMode->Attack(mUserCharacter);
 				bPlayer1Turn = false;
 				bPlayer2Turn = true;
 			}
 
 			else if(bPlayer2First || bPlayer2Turn)
 			{
-				DisplayCharacter(mSecondCharacter);
 				bPlayer2First = false;
 				mGameMode->Attack(mSecondCharacter);
 				bPlayer2Turn = false;
 				bPlayer1Turn = true;
 			}
 			bValidSelection = false;
+			
 			break;
 
 		case 2:
@@ -489,8 +435,11 @@ void Main_Menu::PlayGame()
 		default:
 			break;
 		}
+		std::cin.get();
+		std::cout << "Press Enter to Continue\n";
+		system("cls");
+		
 	} while (!bValidSelection);
-
 }
 
 GameMode* Main_Menu::SetGameMode()
@@ -504,11 +453,11 @@ Character* Main_Menu::CreateCharacter(Race _race, std::string _firstName, std::s
 	{
 	case Race::HUMAN:
 	
-		return new Human(_firstName, _lastName, 100, _gen);
+		return new Human(_firstName, _lastName, 750, _gen);
 
 	case Race::UNDEAD:
 	
-		return new Undead(_firstName, _lastName, 150, _gen);
+		return new Undead(_firstName, _lastName, 800, _gen);
 
 	default:
 		return nullptr;

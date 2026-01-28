@@ -33,5 +33,6 @@ public:
 	Weapon* GetWeapon() const { return mWeapon; }
 	std::string GetFirstName() const { return mFirstName; }
 	std::string GetLastName() const { return mLastName; }
+	unsigned int GetHealth() const { return mHealth; }
 };
 
