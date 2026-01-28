@@ -60,6 +60,7 @@ void Main_Menu::RaceMenu()
 		{
 		case 1:
 			mUserRace = Race::HUMAN;
+			std::cout << "Human Choose\n";
 			GenderMenu();
 			bValidChoice = true;
 			bRaceSelected = true;
@@ -84,12 +85,12 @@ void Main_Menu::RaceMenu()
 				}
 				mSecondCharacter = CreateCharacter(mUserRace, userFirstName, userLastName, mGender);
 			}
-
 			
 			break;
 
 		case 2:
 			mUserRace = Race::UNDEAD;
+			std::cout << "Undead Choose\n";
 			GenderMenu();
 			bValidChoice = true;
 			bRaceSelected = true;
@@ -113,6 +114,7 @@ void Main_Menu::RaceMenu()
 				}
 				mSecondCharacter = CreateCharacter(mUserRace, userFirstName, userLastName, mGender);
 			}
+
 			break;
 
 		default:
@@ -310,8 +312,7 @@ void Main_Menu::BeginMenu()
 		bCharacter1RdyCreate = true;
 		RaceMenu();
 		if (bRaceSelected && mUserCharacter)
-		{
-			mUserCharacter->Display();
+		{		
 			ClassMenu();
 			bCharacter1Complete = true;
 			bValidSelection = false;
@@ -336,8 +337,6 @@ void Main_Menu::BeginMenu()
 		RaceMenu();
 		if (bRaceSelected && mSecondCharacter)
 		{
-			mSecondCharacter->Display();
-		
 			ClassMenu();
 			bCharacter2Complete = true;
 			bValidSelection = false;
@@ -364,18 +363,18 @@ void Main_Menu::BeginMenu()
 			int p1 = dis(gen);
 			int p2 = dis(gen);
 
-			std::cout << "Player 1 rolls " << p1 << '\n';
-			std::cout << "Player 2 rolls " << p2 << '\n';
+			std::cout << mUserCharacter->GetFirstName() << " rolls " << p1 << '\n';
+			std::cout << mSecondCharacter->GetFirstName() << " 2 rolls " << p2 << '\n';
 
 			if (p1 > p2)
 			{
-				std::cout << "Player 1 goes 1st" << '\n';
+				std::cout << mUserCharacter->GetFirstName() << " goes 1st" << '\n';
 				bPlayer1First = true;
 				bPlayer1Turn = true;
 				PlayGame();
 			}
 			else {
-				std::cout << "Player 2 goes 1st" << '\n';
+				std::cout << mSecondCharacter->GetFirstName() << " goes 1st" << '\n';
 				bPlayer2First = true;
 				bPlayer2Turn = true;
 				PlayGame();
@@ -451,7 +450,6 @@ void Main_Menu::DisplayCharacter(Character* _char)
 
 	std::cout << "Name: " << _char->GetFirstName() << " " << _char->GetLastName() << "\nGender: " << gender << "\nClass: " << className << "\nRace: " << race << '\n';
 }
-
 
 void Main_Menu::PlayGame()
 {

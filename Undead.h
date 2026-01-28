@@ -8,7 +8,7 @@ public:
 		:Character(_firstName, _lastName, _health, _gen)
 	{
 		mRace = Race::UNDEAD;
-		std::cout << "Undead CTor\n";
+		//std::cout << "Undead CTor\n";
 	}
 	~Undead()
 	{ 
