@@ -1,4 +1,5 @@
 #include "Main_Menu.h"
+#include "Helper.h"
 
 Main_Menu::~Main_Menu()
 {
@@ -51,10 +52,13 @@ void Main_Menu::RaceMenu()
 	do {
 		std::cout << "Welcome to Character select screen\nPlease select a Race:\n1 = Human\n2 = Undead\nSelection: ";
 		std::cin >> userChoice;
+		Helper::CleanInputBuffer();
 		std::cout << "Enter Characters first name: ";
 		std::cin >> userFirstName;
+		Helper::CleanInputBuffer();
 		std::cout << "Enter Character last name: ";
 		std::cin >> userLastName;
+		Helper::CleanInputBuffer();
 
 		switch (userChoice)
 		{
@@ -134,6 +138,7 @@ void Main_Menu::ClassMenu()
 
 		std::cout << "Please choose a class\n1 = Warrior\n2 = Archer\n3 = Mage\n4 = Priest\n5 = Death Knight\nSelection: ";
 		std::cin >> userChoice;
+		Helper::CleanInputBuffer();
 		id = offset + (userChoice - 1);
 
 		switch (userChoice)
@@ -267,6 +272,7 @@ void Main_Menu::GenderMenu()
 	do {
 		std::cout << "Please select a gender\n1: Male\n2: Female\nSelection: ";
 		std::cin >> userChoice;
+		Helper::CleanInputBuffer();
 		switch (userChoice)
 		{
 		case 1:
@@ -297,6 +303,7 @@ void Main_Menu::BeginMenu()
 
 		std::cout << "Play Game\n1: Create Character\n2: Create Second Character\n3: Play Game\n4: Exit\nSelection: ";
 		std::cin >> userChoice;
+		Helper::CleanInputBuffer();
 
 	switch (userChoice)
 	{
@@ -355,7 +362,6 @@ void Main_Menu::BeginMenu()
 			bValidSelection = false;
 		}
 		else {
-			system("cls");
 			std::random_device rd;
 			std::mt19937 gen(rd());
 			std::uniform_int_distribution<> dis(1, 100);
@@ -364,7 +370,7 @@ void Main_Menu::BeginMenu()
 			int p2 = dis(gen);
 
 			std::cout << mUserCharacter->GetFirstName() << " rolls " << p1 << '\n';
-			std::cout << mSecondCharacter->GetFirstName() << "  rolls " << p2 << '\n';
+			std::cout << mSecondCharacter->GetFirstName() << " rolls " << p2 << '\n';
 
 			if (p1 > p2)
 			{
@@ -390,7 +396,7 @@ void Main_Menu::BeginMenu()
 	default:
 		break;
 	}
-	
+
 	} while (!bValidSelection);
 }
 
@@ -402,17 +408,22 @@ void Main_Menu::PlayGame()
 	int userChoice;
 	bool bValidSelection = false;
 	do {
+		Helper::PauseConsoleWindow();
+		system("cls");
 		mUserCharacter->DisplayStats();
 		mSecondCharacter->DisplayStats();
+
 		std::cout << "Please select a action\n1: Attack\n2: Exit\nSelection: ";
 		std::cin >> userChoice;
+		Helper::CleanInputBuffer();
+
 		switch (userChoice)
 		{
 		case 1:
 			if (bPlayer1First || bPlayer1Turn)
 			{
 				bPlayer1First = false;
-				mGameMode->Attack(mUserCharacter);
+				mGameMode->Attack(mUserCharacter, mSecondCharacter);
 				bPlayer1Turn = false;
 				bPlayer2Turn = true;
 			}
@@ -420,7 +431,7 @@ void Main_Menu::PlayGame()
 			else if(bPlayer2First || bPlayer2Turn)
 			{
 				bPlayer2First = false;
-				mGameMode->Attack(mSecondCharacter);
+				mGameMode->Attack(mSecondCharacter, mUserCharacter);
 				bPlayer2Turn = false;
 				bPlayer1Turn = true;
 			}
@@ -435,9 +446,6 @@ void Main_Menu::PlayGame()
 		default:
 			break;
 		}
-		std::cin.get();
-		std::cout << "Press Enter to Continue\n";
-		system("cls");
 		
 	} while (!bValidSelection);
 }

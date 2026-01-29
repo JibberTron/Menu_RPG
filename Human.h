@@ -27,6 +27,7 @@ public:
 
 	void SetClass(const CharacterClass _class);
 	void SetWeapon(const CharacterClass _class);
+	void SetHealth(const unsigned int _health);
 
 	CharacterClass GetClass() const { return mClass; }
 	Race GetRace()const { return mRace; }

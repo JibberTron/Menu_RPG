@@ -62,4 +62,12 @@ void Undead::SetWeapon(const CharacterClass _class)
 	}
 }
 
+void Undead::SetHealth(const unsigned int _health)
+{
+	if(_health >= 0)
+	{
+		mHealth = _health;
+	}
+}
+
 

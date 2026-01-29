@@ -51,8 +51,11 @@ public:
 
 	virtual void Display() const = 0;
 	virtual void DisplayStats();
+
 	virtual void SetClass(const CharacterClass _class) = 0;
 	virtual void SetWeapon(const CharacterClass _class) = 0;
+	virtual void SetHealth(const unsigned int _health) = 0;
+
 	virtual CharacterClass GetClass() const = 0;
 	virtual Weapon* GetWeapon() const = 0;
 	virtual Gender GetGender() const = 0;

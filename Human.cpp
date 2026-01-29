@@ -50,3 +50,11 @@ void Human::SetWeapon(const CharacterClass _class)
 		break;
 	}
 }
+
+void Human::SetHealth(const unsigned int _health)
+{
+	if (_health >= 0)
+	{
+		mHealth = _health;
+	}
+}

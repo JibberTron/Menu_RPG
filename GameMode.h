@@ -14,6 +14,6 @@ public:
 	{
 
 	}
-	void Attack(Character* _char);
+	void Attack(Character* _attacker, Character* _victim);
 };
 

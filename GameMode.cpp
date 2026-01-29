@@ -12,32 +12,42 @@ bool GameMode::RollChance(double _chance)
     return dist(RNG()) < _chance;
 }
 
-void GameMode::Attack(Character* _char)
+// maybe do a heal method with certain amount of heal based on the char unless your a priest
+// maybe pass through both character as a way to take health away if the other player is getting hit
+void GameMode::Attack(Character* _attacker, Character* _victim)
 {
-    if (!_char) return;
-    mHit = RollChance(_char->GetWeapon()->GetHitChance());
-    double damage = _char->GetWeapon()->GetWeaponDmg();
+    if (!_attacker) return;
+    unsigned int health = _victim->GetHealth();
+    mHit = RollChance(_attacker->GetWeapon()->GetHitChance());
+    double damage = _attacker->GetWeapon()->GetWeaponDmg();
     mCrit = false;
 
     if (mHit)
     {
-        mCrit = RollChance(_char->GetWeapon()->GetCritChance());
+        mCrit = RollChance(_attacker->GetWeapon()->GetCritChance());
         if (mCrit)
         {
-            damage = _char->GetWeapon()->GetCritDmg();
+            damage = _attacker->GetWeapon()->GetCritDmg();
         }
     }
 
     if (!mHit)
     {
-        std::cout << "Miss\n";
+        std::cout << _attacker->GetFirstName() << " Misses\n";
     }
     else if (mCrit)
     {
-        std::cout << "Critical Hit for " << damage << " damage\n";
+        std::cout << _attacker->GetFirstName() << " Critical Hit's for " << damage << " damage\n";
+        health -= damage;
+        _victim->SetHealth(health);
+        std::cout << _victim->GetFirstName() << "'s health reduces by " << damage;
+        
     }
     else {
-        std::cout << "Hit for " << damage << " damage\n";
+        std::cout << _attacker->GetFirstName() << " Hit's for " << damage << " damage\n";
+        health -= damage;
+        _victim->SetHealth(health);
+        std::cout << _victim->GetFirstName() << "'s health reduces by " << damage;
     }
 
 }

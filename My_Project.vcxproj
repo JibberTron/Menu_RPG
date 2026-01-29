@@ -140,6 +140,7 @@
   <ItemGroup>
     <ClInclude Include="Character.h" />
     <ClInclude Include="GameMode.h" />
+    <ClInclude Include="Helper.h" />
     <ClInclude Include="Human.h" />
     <ClInclude Include="Main_Menu.h" />
     <ClInclude Include="Melee.h" />
